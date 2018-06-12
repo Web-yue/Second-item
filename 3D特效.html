@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            margin-left: 450px;
+            margin-top: 200px;
+            width: 360px;
+            height: 200px;
+            border: 1px solid #36979c;
+            position: absolute;
+
+        }
+
+        .box > div {
+            display: inline-block;
+            transition: all 3s linear;
+            float: left;
+            width: 60px;
+            height: 200px;
+            transform-style: preserve-3d;
+            position: relative;
+
+        }
+
+        .a0 {
+            transform-origin: -300px 250px;
+            transform: rotateX(-30deg) rotateY(-20deg);
+        }
+
+        .a1 {
+            transform-origin: -0px -0px;
+            transform: rotateX(-0deg) rotateY(-0deg);
+
+        }
+
+        .a2 {
+            transform-origin: -100px 100px -100px;
+        }
+
+        .A {
+            left: 0;
+            top: 0;
+        }
+
+        .A > div, .B > div, .C > div, .D > div, .E > div, .F > div {
+            height: 200px;
+            position: absolute;
+            font-size: 20px;
+            line-height: 200px;
+            text-align: center;
+            left: 0;
+            top: 0;
+        }
+
+        .a {
+            width: 60px;
+            background-size: 320px 200px;
+            background: rgba(242, 16, 229, 0.5);
+            transform: translateZ(100px);
+        }
+
+        .b {
+            width: 60px;
+            background: rgba(18, 242, 208, 0.5);
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        .c {
+            width: 60px;
+            background: rgba(38, 242, 33, 0.5);
+            transform: rotateX(180deg) translateZ(100px);
+        }
+
+        .d {
+            width: 60px;
+            background: rgba(222, 255, 47, 0.3);
+
+            transform: rotateX(90deg) translateZ(100px);
+        }
+
+        .e {
+            width: 200px;
+            background: rgba(242, 51, 14, 0.3);
+
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+
+        .f {
+            width: 200px;
+            background: rgba(242, 157, 119, 0.5);
+            transform: rotateY(90deg) translateZ(-40px);
+        }
+
+        .F > .f {
+            font-size: 60px;
+            color: white;
+        }
+
+        .box > div > div {
+            background-size: contain;
+
+        }
+
+        #Box {
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            display: none;
+            left: 30px;
+            opacity: 0.5;
+            font-size: 0;
+            background: rgba(18, 242, 15, 1);
+            outline: none;
+            top: 0;
+            border-radius: 50%;
+        }
+
+        button:nth-of-type(2) {
+            background: rgba(242, 198, 4, 1);
+            top: 30px;
+        }
+
+        button:nth-of-type(3) {
+            background: rgba(5, 213, 242, 1);
+            top: 60px;
+        }
+
+        button:nth-of-type(4) {
+            background: rgba(255, 3, 53, 1);
+            top: 90px;
+        }
+
+        button:nth-of-type(5) {
+            background: rgba(82, 6, 242, 1);
+            top: 120px;
+        }
+
+        button:nth-of-type(6) {
+            background: rgba(242, 78, 5, 1);
+            top: 150px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="btn">
+    <button>按回车键<br>重新加载</button>
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+</div>
+<div id="Box">
+    <div class="box">
+        <div class=" A">
+            <div class="a ha"></div>
+            <div class="b ha"></div>
+            <div class="c ha"></div>
+            <div class="d ha"></div>
+            <div class="e ha"></div>
+            <div class="f ha"></div>
+        </div>
+        <div class=" B"></div>
+        <div class=" C"></div>
+        <div class=" D"></div>
+        <div class=" E"></div>
+        <div class=" F"></div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script>
+    var index = false;
+    $(window).mousemove(function (e) {
+        if ((e.clientX < 100)) {
+            $('button').css('display', 'block')
+        } else {
+            $('button').hide()
+        }
+    });
+    $('button').hover(function () {
+        $(this).css({
+            transform: 'scale(2)', opacity: '0.8'
+        }, 1000)
+    }, function () {
+        $(this).css({
+            transform: 'scale(1)', opacity: '0.5'
+        }, 1000)
+    });
+
+    if (index == false)
+        $('.btn').click(function () {
+            alert('不要点我^v^ ')
+        });
+
+    $('html').mousemove(aa = function (e) {
+        var ev = e || event;
+        $('.box').css({
+            marginLeft: 0,
+            marginTop: 0,
+            left: ev.clientX,
+            top: ev.clientY
+        });
+        $(document).click(function (e) {
+            $('html:not(.btn)').unbind('mousemove');
+            var ev = e || event;
+            $('.box').css({
+                marginLeft: 0,
+                left: ev.clientX,
+                top: ev.clientY,
+                border: 'none'
+            })
+        })
+    });
+
+    //heihei()为6个立方体样式函数
+    function heihei() {
+        $('.B,.C,.D,.E,.F').html($('.A').html());
+        var ran = Math.floor(Math.random() * 6);
+        $('.box>div').each(function (i, e) {
+            var arr = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
+            $(e).children( '.b', '.c', '.d').css({
+                backgroundSize: '360PX 200PX',
+                backgroundPositionX: -(i) * 60 + 'px'
+            });
+            $(e).children('.a').css({
+                background: 'url(' + arr[ran] + ')no-repeat',
+                backgroundSize: '360PX 200PX',
+                backgroundPositionX: -(i) * 60 + 'px'
+            });
+            $(e).children('.b').css({
+                background: 'url(' + arr[1] + ')no-repeat'
+             });
+            $(e).children('.c').css({
+                background: 'url(' + arr[2] + ')no-repeat',
+             });
+            $(e).children('.d').css({
+                background: 'url(' + arr[3] + ')no-repeat'
+            });
+            $(e).children('.e').css({
+                background: 'url(' + arr[4] + ')no-repeat',
+                backgroundSize: '360PX 360PX'
+            });
+            $(e).children('.f').css({
+                background: 'url(' + arr[5] + ')no-repeat',
+                backgroundSize: '360PX 360PX'
+                // background: "url(http://b189.photo.store.qq.com/psb?/V14Ci3Rf4LQQqd/xCeEqcA91CH9BLMWa4tXA5k2ymuCatqLCNrVg*MANXQ!/b/dCrGrnBpBwAA&bo=IAM3BDAMcBAFCWY!&rf=viewer_4)no-repeat"
+            })
+        });
+    }
+
+    heihei();
+
+    //style1  样式一
+    function style1() {
+        var rand = Math.floor(Math.random() * 5);
+        var arr1 = [0, 1,2,3,4,5];
+$('.box>div').addClass('a0')
+        function haha2() {
+            $('.box>div').each(function (i, e) {
+                $(e).css({
+                    transform: 'rotateX(360deg)rotateY(' + arr1[rand] + '360deg)',
+                    transition: 10 + 0.3 * i*arr1[rand] + 's'
+                })
+            })
+        }
+
+        function haha1() {
+            $('.box>div').each(function (i, e) {
+                $(e).css({
+                    transform: 'rotateX(3600deg)rotateY(360deg)',
+                    transition: 10 + 0.3 * i + 's'
+                })
+            })
+        }
+
+        setTimeout(function () {
+            haha1();
+            setTimeout(function () {
+                haha2()
+            }, Math.random() * 2000)//2000
+        }, Math.random() * 2000);//Math.random()*4000
+    }
+    style1();
+
+    var timer = null;
+        clearInterval(timer);
+        timer = setInterval(function () {
+            style1();
+        }, 13000);
+
+
+
+    document.onkeydown = function (event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 13) {
+            var gg = location.href;
+            location.href = gg;
+        }
+    }
+
+
+    //
+    // obj.css({
+    //     'transform': 'scale(' + xScale + ', ' + yScale + ')',
+    //     'transform-origin': '0px 0px',
+    //     /* IE 9 */
+    //     '-ms-transform': 'scale(' + xScale + ', ' + yScale + ')',
+    //     '-ms-transform-origin': '0px 0px',
+    //     /* Safari 和 Chrome */
+    //     '-webkit-transform': 'scale(' + xScale + ', ' + yScale + ')',
+    //     '-webkit-transform-origin': '0px 0px',
+    //     /* Firefox */
+    //     '-moz-transform': 'scale(' + xScale + ', ' + yScale + ')',
+    //     '-moz-transform-origin': '0px 0px',
+    //     /* Opera */
+    //     '-o-transform': 'scale(' + xScale + ', ' + yScale + ')',
+    //     '-o-transform-origin': '0px 0px'
+    // });
+</script>
+</html>
